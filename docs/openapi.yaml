@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  description: |-
+    This API provides authentication and user management services.
+    It is implemented in two versions:
+    1.  **Express.js (TypeScript)** in the `express-ts` directory.
+    2.  **Go (Fiber)** in the `gofiber` directory.
+
+    Both implementations share a similar API structure for user login and profile retrieval.
+    This documentation describes the common API endpoints.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3000/api/v1
+    description: Standardized API Server
+paths:
+  /auth/login:
+    post:
+      summary: User Login
+      description: Authenticates a user and returns a JWT token.
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Invalid request (e.g., missing fields)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Unauthorized (e.g., invalid credentials)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /user/profile:
+    get:
+      summary: Get User Profile
+      description: Retrieves the profile information of the authenticated user.
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          description: Unauthorized (e.g., missing or invalid token)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: user1@test.com
+        password:
+          type: string
+          example: "passworduser1"
+      required:
+        - email
+        - password
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Test User"
+        email:
+          type: string
+          example: user1@test.com
+        username:
+          type: string
+          example: "testuser"
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Invalid credentials"
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

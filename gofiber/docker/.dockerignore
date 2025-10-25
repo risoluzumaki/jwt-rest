@@ -1,0 +1,17 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Go
+*.air
+tmp
+
+# Env
+.env
+
+# Readme
+*.md
