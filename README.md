@@ -1,8 +1,8 @@
-# JWT Auth Backend (Express.js, Go-Fiber and others)
+# JWT Auth Backend (Express.js, Go-Fiber, Javalin and others)
 
-This project demonstrates a complete JWT (JSON Web Token) based authentication backend, uniquely implemented in two popular technologies for comparison: **Node.js with Express.js & TypeScript** and **Go with Fiber**.
+This project demonstrates a complete JWT (JSON Web Token) based authentication backend, uniquely implemented in three popular technologies for comparison: **Node.js with Express.js & TypeScript**, **Go with Fiber**, and **Java with Javalin**.
 
-Both applications provide the same core API for user login and profile retrieval, allowing for a direct comparison of syntax, project structure, performance, and ecosystem.
+All applications provide the same core API for user login and profile retrieval, allowing for a direct comparison of syntax, project structure, performance, and ecosystem.
 
 ## Technologies Used
 
@@ -11,16 +11,19 @@ Both applications provide the same core API for user login and profile retrieval
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Go](https://img.shields.io/badge/Go-00ADD8?style=for-the-badge&logo=go&logoColor=white)
 ![Fiber](https://img.shields.io/badge/Fiber-000000?style=for-the-badge&logo=go&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Javalin](https://img.shields.io/badge/Javalin-000000?style=for-the-badge&logo=javalin&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 ## Project Structure
 
-The repository is organized into two main directories, one for each implementation:
+The repository is organized into three main directories, one for each implementation:
 
 - **`/express-ts`**: Contains the backend application built with Express.js and TypeScript.
 - **`/gofiber`**: Contains the backend application built with Go and the Fiber framework.
+- **`/javalin`**: Contains the backend application built with Java and the Javalin framework.
 
-Both follow a modular structure, separating concerns for domains like `auth` and `user`.
+All follow a modular structure, separating concerns for domains like `auth` and `user`.
 
 ## API Documentation
 
@@ -32,12 +35,14 @@ You can use tools like the [Swagger Editor](https://editor.swagger.io/) to visua
 
 ## Getting Started
 
-Below are the instructions to run both applications, either directly on your machine or using Docker.
+Below are the instructions to run all applications, either directly on your machine or using Docker.
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/en/) (v18 or later)
 - [Go](https://go.dev/doc/install) (v1.21 or later)
+- [Java](https://www.java.com/en/download/) (v17 or later)
+- [Maven](https://maven.apache.org/install.html)
 - [Docker](https://www.docker.com/get-started)
 
 --- 
@@ -53,7 +58,7 @@ cd express-ts
 # Install dependencies
 npm install
 
-# Start the server (usually on port 3000 )
+# Start the server (usually on port 3000)
 
 # Dev Run 
 npm run dev
@@ -69,8 +74,18 @@ npm start
 # Navigate to the gofiber directory
 cd gofiber
 
-# Run the application (usually on port 3000 )
+# Run the application (usually on port 3001)
 go run ./cmd/main.go
+```
+
+#### 3. Java + Javalin App
+
+```bash
+# Navigate to the javalin directory
+cd javalin
+
+# Run the application (usually on port 3002)
+mvn exec:java -Dexec.mainClass="com.jwt.app.Main"
 ```
 
 --- 
@@ -89,15 +104,15 @@ cd gofiber
 docker build -t gofiber-app -f docker/Dockerfile .
 
 # Run the container
-# This will map the container's port 3000 to your local machine's port 3000
-docker run -p 3000:3000 gofiber-app
+# This will map the container's port 3001 to your local machine's port 3001
+docker run -p 3001:3001 gofiber-app
 ```
 
 #### 2. Express.js + TypeScript App
 The `express` application is fully containerized.
 
 ```bash
-# From the project root, navigate to the gofiber directory
+# From the project root, navigate to the express-ts directory
 cd express-ts
 
 # Build the Docker image
@@ -106,4 +121,19 @@ docker build -t express-app -f docker/Dockerfile .
 # Run the container
 # This will map the container's port 3000 to your local machine's port 3000
 docker run -p 3000:3000 express-app
+```
+
+#### 3. Java + Javalin App
+The `javalin` application is fully containerized.
+
+```bash
+# From the project root, navigate to the javalin directory
+cd javalin
+
+# Build the Docker image
+docker build -t javalin-app -f docker/Dockerfile .
+
+# Run the container
+# This will map the container's port 3002 to your local machine's port 3002
+docker run -p 3002:3002 javalin-app
 ```
